@@ -15,7 +15,15 @@ exports.adminLogin = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid admin credentials' });
     }
     const token = generateToken(admin._id, 'admin');
-    res.json({ token });
+    // Return both token and admin info:
++   res.json({
+       token,
+       user: {
+         id: admin._id,
+         email: admin.email,
+         role: 'admin'
+       }
+    });
   } catch (err) {
     next(err);
   }
